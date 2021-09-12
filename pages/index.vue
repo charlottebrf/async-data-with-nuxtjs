@@ -10,11 +10,9 @@ import Vue from 'vue'
 import axios from 'axios';
 
 export default Vue.extend({
-  data() {
-    return { myQuote: 'placeholder'}
-  },
-   async asyncData()  {
+   async asyncData(context)  {
     try {
+      // console.log('here is context', context)
       let response = await axios.get("https://type.fit/api/quotes")
       
       if (response.status !== 200) {
@@ -22,6 +20,7 @@ export default Vue.extend({
       }
 
       let text =  await response.data;
+      // sets the value of the data object => this.myQuote = text no longer works now using asyncData rather than fetch with Vue lifecyclen hooks
       return { myQuote: text }
 
     } catch(e) {
