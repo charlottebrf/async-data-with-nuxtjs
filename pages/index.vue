@@ -7,6 +7,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import axios from 'axios';
 
 export default Vue.extend({
   data() {
@@ -19,12 +20,13 @@ export default Vue.extend({
     methods: {
     gettingQuotes: async function() {
     try {
-      let response = await fetch("https://type.fit/api/quotes")
-      if (!response.ok) {
+      let response = await axios.get("https://type.fit/api/quotes")
+      
+      if (response.status !== 200) {
         throw new Error('Could not fetch quotes')
       }
 
-      let text =  await response.text();
+      let text =  await response.data;
       this.myQuote = text;
 
     } catch(e) {
