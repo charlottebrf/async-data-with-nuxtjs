@@ -7,21 +7,20 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import axios from 'axios';
 
 export default Vue.extend({
-   async asyncData(context)  {
+   async asyncData({ $axios })  {
     try {
-      // console.log('here is context', context)
-      let response = await axios.get("https://type.fit/api/quotes")
+     // using $axios.$get means you just get the data back, rather
+      let response = await $axios.$get()
       
-      if (response.status !== 200) {
-        throw new Error('Could not fetch quotes')
-      }
+      // We can no longer do this because we only get back the data object not the full response object as previously from axios
+      // if (response.status !== 200) {
+      //   throw new Error('Could not fetch quotes')
+      // }
 
-      let text =  await response.data;
       // sets the value of the data object => this.myQuote = text no longer works now using asyncData rather than fetch with Vue lifecyclen hooks
-      return { myQuote: text }
+      return { myQuote: response }
 
     } catch(e) {
       console.log('Here is the error', e)
