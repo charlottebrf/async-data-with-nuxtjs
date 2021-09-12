@@ -13,12 +13,7 @@ export default Vue.extend({
   data() {
     return { myQuote: 'placeholder'}
   },
-
-   created() {
-     this.gettingQuotes()
-   },
-    methods: {
-    gettingQuotes: async function() {
+   async asyncData()  {
     try {
       let response = await axios.get("https://type.fit/api/quotes")
       
@@ -27,13 +22,12 @@ export default Vue.extend({
       }
 
       let text =  await response.data;
-      this.myQuote = text;
+      return { myQuote: text }
 
     } catch(e) {
       console.log('Here is the error', e)
     }
-  }
-}
+  },
 });
 
 </script>
